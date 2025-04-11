@@ -16,14 +16,14 @@ public class Main {
             CajaDeAhorroBuilder cajaDeAhorroBuilder = new CajaDeAhorroBuilder();
             cajaDeAhorroBuilder.setId(i);
             CajaDeAhorro cajaDeAhorro = cajaDeAhorroBuilder.getCajaDeAhorro();
-            LogicaCuenta.obtenerInstancia().agregarCuenta(cajaDeAhorro);
+            boolean res1 = LogicaCuenta.obtenerInstancia().agregarCuenta(cajaDeAhorro);
 
             i++;
 
             CuentaCorrienteBuilder cuentaCorrienteBuilder = new CuentaCorrienteBuilder();
             cuentaCorrienteBuilder.setId(i);
             CuentaCorriente cuentaCorriente = cuentaCorrienteBuilder.getCuentaCorriente();
-            LogicaCuenta.obtenerInstancia().agregarCuenta(cuentaCorriente);
+            boolean res2 = LogicaCuenta.obtenerInstancia().agregarCuenta(cuentaCorriente);
         }
 
         for (int i = 0; i < 5000; i++) {
@@ -31,9 +31,15 @@ public class Main {
             var res1 = LogicaCuenta.obtenerInstancia().quitarSaldo(random.nextInt(20), 100);
         }
 
+        int total = 0;
+
         for (int i = 0; i < 20; i++) {
             System.out.println("Saldo cuenta " + (i + 1 ) + " " + LogicaCuenta.obtenerInstancia().consultarSaldo(i));
             System.out.println("Movimientos cuenta " + (i + 1 ) + " " + LogicaCuenta.obtenerInstancia().getTransacciones(i));
+            total += LogicaCuenta.obtenerInstancia().getTransacciones(i);
         }
+
+        System.out.println("\n" + total);
+
     }
 }

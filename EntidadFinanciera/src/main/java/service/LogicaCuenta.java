@@ -4,11 +4,16 @@ import dto.CajaDeAhorro;
 import dto.Cuenta;
 import dto.CuentaCorriente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class LogicaCuenta {
     private static LogicaCuenta instancia;
     protected List<Cuenta> cuentaList;
+
+    private LogicaCuenta() {
+        cuentaList = new ArrayList<>();
+    }
 
     public static LogicaCuenta obtenerInstancia() {
         if (instancia == null) {
