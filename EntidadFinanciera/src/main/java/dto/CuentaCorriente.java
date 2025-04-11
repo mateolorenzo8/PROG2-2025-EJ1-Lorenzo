@@ -1,26 +1,52 @@
 package dto;
 
-import service.LogicaCuenta;
+public class CuentaCorriente extends Cuenta implements IGestionSaldo {
+    private double giroCubierto = 0;
 
-public class CuentaCorriente implements ICuenta {
+    public CuentaCorriente(int id, double giroCubierto) {
+        this.giroCubierto = giroCubierto;
+        this.id = id;
+    }
 
-    @Override
-    public boolean agregarSaldo(int cuenta, double monto) {
-        return LogicaCuenta.obtenerInstancia().agregarSaldo(cuenta, monto);
+    public double getGiroCubierto() {
+        return giroCubierto;
+    }
+
+    private void setGiroCubierto(){
+        giroCubierto = this.saldo;
+    }
+
+    public void setGiroCubierto(double giroCubierto) {
+        this.giroCubierto = giroCubierto;
     }
 
     @Override
-    public boolean quitarSaldo(int cuenta, double monto) {
-        return LogicaCuenta.obtenerInstancia().quitarSaldo(cuenta, monto);
+    public synchronized boolean agregarSaldo(double monto) {
+        saldo += monto;
+        transacciones++;
+
+        return true;
+    }
+
+    @Override
+    public synchronized boolean quitarSaldo(double monto) {
+        setGiroCubierto();
+        
+        if ((saldo - monto) <= giroCubierto) return false;
+
+        saldo -= monto;
+        transacciones++;
+
+        return true;
     }
 
     @Override
     public double getSaldo() {
-        return 0;
+        return saldo;
     }
 
     @Override
     public int getOperaciones() {
-        return 0;
+        return transacciones;
     }
 }

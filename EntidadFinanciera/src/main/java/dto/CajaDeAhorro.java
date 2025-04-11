@@ -1,26 +1,37 @@
 package dto;
 
-import service.LogicaCuenta;
+public class CajaDeAhorro extends Cuenta implements IGestionSaldo {
 
-public class CajaDeAhorro implements ICuenta {
-
-    @Override
-    public boolean agregarSaldo(int cuenta, double monto) {
-        return LogicaCuenta.obtenerInstancia().agregarSaldo(cuenta, monto);
+    public CajaDeAhorro(int id) {
+        this.id = id;
     }
 
     @Override
-    public boolean quitarSaldo(int cuenta, double monto) {
-        return LogicaCuenta.obtenerInstancia().quitarSaldo(cuenta, monto);
+    public synchronized boolean agregarSaldo(double monto) {
+        saldo += monto;
+        transacciones++;
+
+        return false;
+    }
+
+    @Override
+    public synchronized boolean quitarSaldo(double monto) {
+        if (saldo < monto) return false;
+
+        saldo -= monto;
+        transacciones++;
+
+        return false;
     }
 
     @Override
     public double getSaldo() {
-        return 0;
+        return saldo;
     }
 
     @Override
     public int getOperaciones() {
-        return 0;
+        return transacciones;
     }
+
 }
