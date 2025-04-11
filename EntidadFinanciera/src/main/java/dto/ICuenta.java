@@ -1,8 +1,8 @@
 package dto;
 
 public interface ICuenta {
-    boolean agregarSaldo(double monto);
-    boolean quitarSaldo(double monto);
+    boolean agregarSaldo(int id, double monto);
+    boolean quitarSaldo(int id, double monto);
     double getSaldo();
     int getOperaciones();
 }

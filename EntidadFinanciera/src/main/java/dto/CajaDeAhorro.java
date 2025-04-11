@@ -1,15 +1,17 @@
 package dto;
 
+import service.LogicaCuenta;
+
 public class CajaDeAhorro implements ICuenta {
 
     @Override
-    public boolean agregarSaldo(double monto) {
-        return false;
+    public boolean agregarSaldo(int cuenta, double monto) {
+        return LogicaCuenta.obtenerInstancia().agregarSaldo(cuenta, monto);
     }
 
     @Override
-    public boolean quitarSaldo(double monto) {
-        return false;
+    public boolean quitarSaldo(int cuenta, double monto) {
+        return LogicaCuenta.obtenerInstancia().quitarSaldo(cuenta, monto);
     }
 
     @Override

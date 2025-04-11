@@ -112,4 +112,24 @@ public final class LogicaCuenta {
         return 0;
     }
 
+    public int getTransacciones(int cuenta) {
+        Cuenta cuentaObjeto = cuentaList.stream()
+                .filter(x -> x.obtenerId() == cuenta)
+                .findFirst()
+                .orElse(null);
+
+        if (cuentaObjeto.getClass() == CuentaCorriente.class) {
+            CuentaCorriente cuentaCorriente = (CuentaCorriente)cuentaObjeto;
+
+            cuentaCorriente.getOperaciones();
+        }
+        else if (cuentaObjeto.getClass() == CajaDeAhorro.class) {
+            CajaDeAhorro cajaDeAhorro = (CajaDeAhorro)cuentaObjeto;
+
+            cajaDeAhorro.getOperaciones();
+        }
+
+        return 0;
+    }
+
 }
