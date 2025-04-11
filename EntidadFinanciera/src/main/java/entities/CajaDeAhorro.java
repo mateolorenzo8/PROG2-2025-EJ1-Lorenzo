@@ -1,6 +1,11 @@
-package service;
+package entities;
 
 public class CajaDeAhorro extends Cuenta implements IGestionSaldo {
+
+    @Override
+    public void agregarId(int id) {
+        this.id = id;
+    }
 
     @Override
     public synchronized boolean agregarSaldo(double monto) {
@@ -28,5 +33,10 @@ public class CajaDeAhorro extends Cuenta implements IGestionSaldo {
     @Override
     public int getOperaciones() {
         return transacciones;
+    }
+
+    @Override
+    public int obtenerId() {
+        return this.id;
     }
 }

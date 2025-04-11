@@ -1,18 +1,23 @@
-package service;
+package entities;
 
 public class CuentaCorriente extends Cuenta implements IGestionSaldo {
-    private double giroCubierto = saldo;
-
-    public CuentaCorriente(double giroCubierto) {
-        this.giroCubierto = giroCubierto;
-    }
+    private double giroCubierto = 0;
 
     public double getGiroCubierto() {
         return giroCubierto;
     }
 
+    private void setGiroCubierto(){
+        giroCubierto = this.saldo;
+    }
+
     public void setGiroCubierto(double giroCubierto) {
         this.giroCubierto = giroCubierto;
+    }
+
+    @Override
+    public void agregarId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -25,6 +30,8 @@ public class CuentaCorriente extends Cuenta implements IGestionSaldo {
 
     @Override
     public synchronized boolean quitarSaldo(double monto) {
+        setGiroCubierto();
+        
         if ((saldo - monto) <= giroCubierto) return false;
 
         saldo -= monto;
@@ -41,5 +48,10 @@ public class CuentaCorriente extends Cuenta implements IGestionSaldo {
     @Override
     public int getOperaciones() {
         return transacciones;
+    }
+
+    @Override
+    public int obtenerId() {
+        return this.id;
     }
 }
