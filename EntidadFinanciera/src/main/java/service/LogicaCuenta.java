@@ -5,6 +5,7 @@ import dto.Cuenta;
 import dto.CuentaCorriente;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class LogicaCuenta {
@@ -12,7 +13,7 @@ public final class LogicaCuenta {
     protected List<Cuenta> cuentaList;
 
     private LogicaCuenta() {
-        cuentaList = new ArrayList<>();
+        cuentaList = Collections.synchronizedList(new ArrayList<>());
     }
 
     public static LogicaCuenta obtenerInstancia() {
@@ -43,21 +44,10 @@ public final class LogicaCuenta {
         if (cuentaObjeto == null) return false;
 
         if (cuentaObjeto.getClass() == CuentaCorriente.class) {
-            CuentaCorriente cuentaCorriente = (CuentaCorriente)cuentaObjeto;
-
-            cuentaCorriente.agregarSaldo(monto);
-
-            cuentaList.removeIf(x -> x.getId() == cuenta);
-            cuentaList.add(cuentaCorriente);
-
+            ((CuentaCorriente)cuentaObjeto).agregarSaldo(monto);
         }
         else if (cuentaObjeto.getClass() == CajaDeAhorro.class) {
-            CajaDeAhorro cajaDeAhorro = (CajaDeAhorro)cuentaObjeto;
-
-            cajaDeAhorro.agregarSaldo(monto);
-
-            cuentaList.removeIf(x -> x.getId() == cuenta);
-            cuentaList.add(cajaDeAhorro);
+            ((CajaDeAhorro)cuentaObjeto).agregarSaldo(monto);
         }
         else {
             return false;
@@ -75,21 +65,10 @@ public final class LogicaCuenta {
         if (cuentaObjeto == null) return false;
 
         if (cuentaObjeto.getClass() == CuentaCorriente.class) {
-            CuentaCorriente cuentaCorriente = (CuentaCorriente)cuentaObjeto;
-
-            cuentaCorriente.quitarSaldo(monto);
-
-            cuentaList.removeIf(x -> x.getId() == cuenta);
-            cuentaList.add(cuentaCorriente);
-
+            ((CuentaCorriente)cuentaObjeto).quitarSaldo(monto);
         }
         else if (cuentaObjeto.getClass() == CajaDeAhorro.class) {
-            CajaDeAhorro cajaDeAhorro = (CajaDeAhorro)cuentaObjeto;
-
-            cajaDeAhorro.quitarSaldo(monto);
-
-            cuentaList.removeIf(x -> x.getId() == cuenta);
-            cuentaList.add(cajaDeAhorro);
+            ((CajaDeAhorro)cuentaObjeto).quitarSaldo(monto);
         }
         else {
             return false;
