@@ -31,13 +31,14 @@ public class CuentaCorriente extends Cuenta implements IGestionSaldo {
     @Override
     public synchronized boolean quitarSaldo(double monto) {
         setGiroCubierto();
-        
-        if ((saldo - monto) <= giroCubierto) return false;
 
-        saldo -= monto;
-        transacciones++;
+        if ((Math.abs(saldo - monto)) <= giroCubierto) {
+            saldo -= monto;
+            transacciones++;
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     @Override

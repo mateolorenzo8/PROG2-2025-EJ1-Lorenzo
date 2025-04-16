@@ -10,7 +10,7 @@ import java.util.List;
 
 public final class LogicaCuenta {
     private static LogicaCuenta instancia;
-    protected List<Cuenta> cuentaList;
+    private List<Cuenta> cuentaList;
 
     private LogicaCuenta() {
         cuentaList = Collections.synchronizedList(new ArrayList<>());
@@ -44,16 +44,13 @@ public final class LogicaCuenta {
         if (cuentaObjeto == null) return false;
 
         if (cuentaObjeto.getClass() == CuentaCorriente.class) {
-            ((CuentaCorriente)cuentaObjeto).agregarSaldo(monto);
+            return ((CuentaCorriente)cuentaObjeto).agregarSaldo(monto);
         }
         else if (cuentaObjeto.getClass() == CajaDeAhorro.class) {
-            ((CajaDeAhorro)cuentaObjeto).agregarSaldo(monto);
-        }
-        else {
-            return false;
+            return ((CajaDeAhorro)cuentaObjeto).agregarSaldo(monto);
         }
 
-        return true;
+        return false;
     }
 
     public boolean quitarSaldo(int cuenta, double monto) {
@@ -65,16 +62,13 @@ public final class LogicaCuenta {
         if (cuentaObjeto == null) return false;
 
         if (cuentaObjeto.getClass() == CuentaCorriente.class) {
-            ((CuentaCorriente)cuentaObjeto).quitarSaldo(monto);
+            return ((CuentaCorriente)cuentaObjeto).quitarSaldo(monto);
         }
         else if (cuentaObjeto.getClass() == CajaDeAhorro.class) {
-            ((CajaDeAhorro)cuentaObjeto).quitarSaldo(monto);
-        }
-        else {
-            return false;
+            return ((CajaDeAhorro)cuentaObjeto).quitarSaldo(monto);
         }
 
-        return true;
+        return false;
     }
 
     public double consultarSaldo(int cuenta) {
@@ -117,4 +111,7 @@ public final class LogicaCuenta {
         return 0;
     }
 
+    public List<Cuenta> getCuentaList(){
+        return cuentaList;
+    }
 }
