@@ -13,7 +13,7 @@ public final class LogicaCuenta {
     private List<Cuenta> cuentaList;
 
     private LogicaCuenta() {
-        cuentaList = Collections.synchronizedList(new ArrayList<>());
+        cuentaList = new ArrayList<>();
     }
 
     public static LogicaCuenta obtenerInstancia() {
@@ -77,6 +77,8 @@ public final class LogicaCuenta {
                 .findFirst()
                 .orElse(null);
 
+        if (cuentaObjeto == null) return -1;
+
         if (cuentaObjeto.getClass() == CuentaCorriente.class) {
             CuentaCorriente cuentaCorriente = (CuentaCorriente)cuentaObjeto;
 
@@ -88,7 +90,7 @@ public final class LogicaCuenta {
             return cajaDeAhorro.getSaldo();
         }
 
-        return 0;
+        return -1;
     }
 
     public int getTransacciones(int cuenta) {
@@ -96,6 +98,8 @@ public final class LogicaCuenta {
                 .filter(x -> x.getId() == cuenta)
                 .findFirst()
                 .orElse(null);
+
+        if (cuentaObjeto == null) return -1;
 
         if (cuentaObjeto.getClass() == CuentaCorriente.class) {
             CuentaCorriente cuentaCorriente = (CuentaCorriente)cuentaObjeto;
@@ -108,7 +112,7 @@ public final class LogicaCuenta {
             return cajaDeAhorro.getOperaciones();
         }
 
-        return 0;
+        return -1;
     }
 
     public List<Cuenta> getCuentaList(){

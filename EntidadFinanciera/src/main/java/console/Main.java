@@ -36,7 +36,7 @@ public class Main {
 
         List<CompletableFuture<Void>> operaciones = new ArrayList<>();
 
-        for (int i = 0; i < 50000; i++) {
+        for (int i = 0; i < 5000; i++) {
             int cuenta1 = random.nextInt(20);
             int cuenta2 = random.nextInt(20);
             int cantidad1 = random.nextInt(200);
@@ -58,6 +58,6 @@ public class Main {
             total += LogicaCuenta.obtenerInstancia().getTransacciones(i);
         }
 
-        System.out.println("\n" + total);
+        System.out.println("\n" + "Transacciones correctas: " + total);
     }
 }

@@ -108,7 +108,7 @@ class LogicaCuentaTest {
     }
 
     @Test
-    void consultarSaldo() {
+    void consultarSaldoCuentaExistente() {
         CajaDeAhorroBuilder cajaDeAhorroBuilder = new CajaDeAhorroBuilder();
         cajaDeAhorroBuilder.setId(1);
         CajaDeAhorro cajaDeAhorro = cajaDeAhorroBuilder.getCajaDeAhorro();
@@ -116,11 +116,16 @@ class LogicaCuentaTest {
         admin.agregarCuenta(cajaDeAhorro);
         admin.agregarSaldo(1, 2000);
 
-        Assertions.assertEquals(2000, ((CajaDeAhorro)admin.getCuentaList().get(0)).getSaldo());
+        Assertions.assertEquals(2000, admin.consultarSaldo(1));
     }
 
     @Test
-    void getTransacciones() {
+    void consultarSaldoCuentaInexistente() {
+        Assertions.assertEquals(-1, admin.consultarSaldo(1));
+    }
+
+    @Test
+    void getTransaccionesCuentaExistente() {
         CajaDeAhorroBuilder cajaDeAhorroBuilder = new CajaDeAhorroBuilder();
         cajaDeAhorroBuilder.setId(1);
         CajaDeAhorro cajaDeAhorro = cajaDeAhorroBuilder.getCajaDeAhorro();
@@ -131,6 +136,11 @@ class LogicaCuentaTest {
         admin.agregarSaldo(1, 2000);
         admin.agregarSaldo(1, 2000);
 
-        Assertions.assertEquals(4, ((CajaDeAhorro)admin.getCuentaList().get(0)).getOperaciones());
+        Assertions.assertEquals(4, admin.getTransacciones(1));
+    }
+
+    @Test
+    void getTransaccionesCuentaNoExistente() {
+        Assertions.assertEquals(-1, admin.getTransacciones(1));
     }
 }
